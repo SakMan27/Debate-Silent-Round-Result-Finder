@@ -25,4 +25,4 @@ def get_draws(url):
     return ret
 
 
-print(get_draws(input())
+print(get_draws(input("Enter the link of the tabs (calicotab): "))) # Eg. 'https://counterfactualhst.calicotab.com/_/draw/'
