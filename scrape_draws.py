@@ -25,4 +25,4 @@ def get_draws(url):
     return ret
 
 
-print(get_draws('https://counterfactualhst.calicotab.com/_/draw/'))
+print(get_draws(input())
