@@ -38,5 +38,5 @@ def get_standings(url):
     return ret
 
 
-print(get_standings('https://counterfactualhst.calicotab.com/_/tab/current-standings/'))
+print(get_standings('Enter the link of the tabs (calicotab): ')) # Eg. https://counterfactualhst.calicotab.com/_/tab/current-standings/
 
