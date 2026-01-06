@@ -29,14 +29,33 @@ def get_standings(url):
     # get teams
     teams = table.find_elements(By.XPATH, 'tbody/tr')
     for team in teams:
+        cells = team.find_elements(By.XPATH, "td")
         tmp = {}
-        for key, td in zip(keys, team.find_elements(By.XPATH, 'td')):
-            tmp[key] = td.find_element(By.XPATH, './/span[@class="tooltip-trigger"]').text
-        ret["teams"][tmp["Team"]] = tmp
+        team_name = None   # we'll detect it while iterating
+
+        for key, td in zip(keys, cells):
+            try:
+                value = td.find_element(
+                    By.XPATH, './/span[@class="tooltip-trigger"]'
+                ).text
+            except Exception:
+                value = td.text.strip()
+
+            tmp[key] = value
+
+            # <-- put your normalization logic here
+            normalized = key.lower().strip()
+            if normalized in ("team", "teams", "team name"):
+                team_name = value
+
+        # fallback: if no header matched, use first column
+        if not team_name:
+            team_name = cells[0].text.strip()
+
+        ret["teams"][team_name] = tmp
     
         
     return ret
 
 
-print(get_standings('Enter the link of the tabs (calicotab): ')) # Eg. https://counterfactualhst.calicotab.com/_/tab/current-standings/
-
+print(get_standings(input("Enter the link of the tabs (calicotab): "))) # Eg. https://counterfactualhst.calicotab.com/_/tab/current-standings/
